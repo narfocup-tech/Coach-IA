@@ -1,34 +1,34 @@
-name: Run Tests and Coverage
+name: CoachAI CI Pipeline
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ "main", "master" ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ "main", "master" ]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - name: Descargar codigo del repositorio
+      uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: Configurar Python
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.11'
 
-    - name: Install dependencies
+    - name: Instalar dependencias
       run: |
         python -m pip install --upgrade pip
-        pip install coverage streamlit ollama
+        pip install pytest coverage streamlit
 
-    - name: Run Unit Tests
+    - name: Correr pruebas de Pytest (Unitarias y Funcionales)
       run: |
-        python -m unittest test_coach.py
+        python -m pytest test_coach.py test_functional.py
 
-    - name: Run Coverage Report
+    - name: Reporte de Cobertura
       run: |
-        python -m coverage run -m unittest test_coach.py
-        python -m coverage report -m
+        python -m coverage run -m pytest test_coach.py test_functional.py
+        python -m coverage report
