@@ -22,7 +22,7 @@ jobs:
     - name: Instalar dependencias
       run: |
         python -m pip install --upgrade pip
-        pip install pytest coverage streamlit
+        pip install pytest coverage streamlit ollama
 
     - name: Correr pruebas de Pytest (Unitarias y Funcionales)
       run: |
